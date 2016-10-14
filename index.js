@@ -41,7 +41,7 @@ module.exports = function (session) {
         get(sid, fn){
             
             debug(`SELECT ${sid}`);
-            this.db.any("SELECT sess FROM ${table^} WHERE sid=${sid} AND expires > NOW()", {
+            this.db.one("SELECT sess FROM ${table^} WHERE sid=${sid} AND expires > NOW()", {
                 sid,
                 table: this._getTableName()
             }, qrm.one | qrm.none )
@@ -78,14 +78,14 @@ module.exports = function (session) {
         }
       
         destroy(sid, fn) {
-            this.db.any("DELETE FROM ${table^} WHERE sid = ${sid}", {
+            this.db.query("DELETE FROM ${table^} WHERE sid = ${sid}", {
                 sid,
                 table: this._getTableName()
             }).return(null).asCallback(fn);
         }
         
         touch(sid, sess, fn){
-            this.db.any("UPDATE ${table^} SET expires = to_timestamp(${expires}) WHERE sid = ${sid} RETURNING sid", {
+            this.db.one("UPDATE ${table^} SET expires = to_timestamp(${expires}) WHERE sid = ${sid} RETURNING sid", {
                sid,
                expires: this._getTimeExpires(sess), 
                table: this._getTableName() 
@@ -94,7 +94,7 @@ module.exports = function (session) {
         
         _clearExpiredSessions(){
             debug('CLEARING EXPIRED SESSIONS');
-            return this.db.any("DELETE FROM ${table^} WHERE expires < NOW()", {
+            return this.db.query("DELETE FROM ${table^} WHERE expires < NOW()", {
                 table: this._getTableName()
             });
         }
