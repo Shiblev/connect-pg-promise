@@ -62,7 +62,7 @@ module.exports = function (session) {
                 table: this._getTableName()
             })
             .then((res)=>{
-                if(!res){
+                 if(!res || !res.length){
                     this.db.none("INSERT INTO ${table^} (sess, expires, sid) SELECT ${sess}, to_timestamp(${expires}), ${sid} WHERE NOT EXISTS (SELECT 1 FROM ${table^} WHERE sid = ${sid})",{
                         sess: data,
                         sid,
