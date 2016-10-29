@@ -48,7 +48,9 @@ module.exports = function (session) {
             .then((res)=>{
                 debug(`FOUND ${sid} with data ${res}`);
                 return res && res.sess;             
-            }).asCallback(fn);
+            }).catch(err=>{
+				debug(`NOT FOUND ${sid}`);
+			}).asCallback(fn);
         }
         
         set(sid, sess, fn){
