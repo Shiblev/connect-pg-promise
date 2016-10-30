@@ -46,7 +46,7 @@ module.exports = function (session) {
                 table: this._getTableName()
             }, qrm.one | qrm.none )
             .then((res)=>{
-                debug(`FOUND ${sid} with data ${res}`);
+                debug(`FOUND ${sid} with data ${JSON.stringify(res)}`);
                 return res && res.sess;             
             }).catch(err=>{
 				debug(`NOT FOUND ${sid}`);
