@@ -9,7 +9,7 @@ module.exports = function (session) {
         expiration: 24 * 60 * 60 * 1000,
         checkExpirationInterval: 15 * 60 * 1000,
         schemaName: null,
-        tableName: 'session' 
+        tableName: 'sessions' 
     };
       
     class PgPromiseStore extends Store {
