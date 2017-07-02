@@ -28,7 +28,7 @@ module.exports = function (session) {
         }
         
         _getTimeExpires(sess) {
-            return sess.cookie && +new Date(sess.cookie.expires) || Math.ceil(Date.now()/1000 + ((typeof originalMaxAge === 'number') && originalMaxAge || this.options.expiration));
+            return sess.cookie && +(new Date(sess.cookie.expires)/1000) || Math.ceil(Date.now()/1000 + ((typeof originalMaxAge === 'number') && originalMaxAge || this.options.expiration));
          }
          
         _getTableName(){
